@@ -1,19 +1,24 @@
+````markdown
 # NEXUS
 
 NEXUS is a personal assistant I'm building with Python.
 
-I'm starting with simple computer commands and slowly adding more features as I learn. The current version is a basic command launcher, but the long-term idea is to make NEXUS capable of handling useful tasks on my computer and eventually across my devices.
+I'm starting with simple computer commands and slowly adding more features as I learn. The current version can launch a few applications and websites, respond with speech, and exit cleanly from the terminal.
 
-## Current version — v0.1
+The long-term idea is to make NEXUS capable of handling useful tasks on my computer and eventually across my devices.
+
+## Current version — v0.2
 
 NEXUS currently:
 
-* Takes commands from the terminal
-* Opens Calculator
-* Opens Notepad
-* Opens YouTube
-* Speaks using `pyttsx3`
-* Keeps running until the program is stopped
+- Takes commands from the terminal
+- Opens Calculator
+- Opens Notepad
+- Opens YouTube
+- Responds using text-to-speech
+- Handles unknown commands with a spoken response
+- Accepts `exit` and `quit` commands
+- Keeps running until an exit command is given
 
 Example:
 
@@ -21,10 +26,11 @@ Example:
 open calculator
 open notepad
 open youtube
-please open calculator
-```
+hello
+exit
+````
 
-Commands don't need to match the example exactly. NEXUS currently checks for certain words in the command and then runs the corresponding action.
+Commands don't need to match the examples exactly. NEXUS currently checks for certain words in the command and then runs the corresponding action.
 
 ## How it works
 
@@ -39,7 +45,7 @@ handle_command()
    ↓
 Check command
    ↓
-Run action
+Run action / Speak response
 ```
 
 For example:
@@ -49,7 +55,17 @@ if "open" in command and "calculator" in command:
     subprocess.run("calc.exe")
 ```
 
-So, at this point NEXUS is **not an AI assistant yet**. It is a Python program using basic logic and keyword matching.
+For speech, NEXUS uses a small `speak()` function that creates a speech engine when needed:
+
+```python
+def speak(text):
+    nexus = pyttsx3.init()
+    nexus.say(text)
+    nexus.runAndWait()
+    nexus.stop()
+```
+
+So, at this point NEXUS is **not an AI assistant yet**. It is a Python program using basic logic, keyword matching, and text-to-speech.
 
 ## Setup
 
@@ -98,25 +114,33 @@ I'm building NEXUS in versions instead of trying to write the whole thing at onc
 
 Completed.
 
-Basic terminal commands, text-to-speech, and launching applications/websites.
+The first version introduced:
+
+* Terminal commands
+* Calculator launcher
+* Notepad launcher
+* YouTube launcher
+* Basic text-to-speech
+* Keyword-based command handling
 
 ### v0.2 — Better Commands
 
-Next, I want to improve the current command system.
+Completed.
 
-Planned:
+Added:
 
 * `exit` and `quit` commands
-* More applications and websites
-* Better command matching
-* Cleaner responses
-* Basic error handling
+* Repeated command handling
+* Spoken responses for unknown commands
+* A dedicated `speak()` function
+* More reliable text-to-speech
+* Cleaner command flow
 
-### v0.3 — Voice
+### v0.3 — Voice Input
 
-After the command system is more reliable, I'll work on microphone input.
+Next, I want to experiment with microphone input.
 
-This should allow NEXUS to:
+The goal is to let NEXUS:
 
 * Listen to commands
 * Convert speech to text
@@ -125,7 +149,7 @@ This should allow NEXUS to:
 
 ### v0.4 — Assistant Features
 
-The next stage will focus on things that make NEXUS actually useful.
+The next stage will focus on making NEXUS more useful.
 
 Possible features include:
 
@@ -142,7 +166,12 @@ Once the basic assistant is working, I want to experiment with computer automati
 
 The idea is for NEXUS to handle simple multi-step tasks instead of only opening individual programs.
 
-Examples could include managing files, running scripts, opening several applications, or carrying out repetitive tasks.
+Examples could include:
+
+* Managing files
+* Running scripts
+* Opening several applications
+* Carrying out repetitive tasks
 
 ### Later
 
@@ -165,3 +194,6 @@ The version numbers and features may change as the project develops.
 NEXUS is mainly a learning project right now. I'm using it to learn Python, automation, and how the different parts of a personal assistant fit together.
 
 The code will probably change a lot as I learn more.
+
+```
+```
